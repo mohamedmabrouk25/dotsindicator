@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.dynamicanimation.animation.SpringAnimation
 import com.tbuonomo.viewpagerdotsindicator.BaseDotsIndicator.Type.DEFAULT
 
 class DotsIndicator @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
@@ -23,7 +24,8 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
   private var dotsWidthFactor: Float = 0f
   private var progressMode: Boolean = false
   private var dotsElevation: Float = 0f
-
+  private var dotsWidth : Int = 10
+  private var dotsHeight : Int = 4
   var selectedDotColor: Int = 0
     set(value) {
       field = value
@@ -47,6 +49,8 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
       val a = context.obtainStyledAttributes(attrs, R.styleable.DotsIndicator)
 
       selectedDotColor = a.getColor(R.styleable.DotsIndicator_selectedDotColor, DEFAULT_POINT_COLOR)
+      dotsWidth = a.getDimension(R.styleable.DotsIndicator_dotsWidth,10f).toInt()
+      dotsHeight = a.getDimension(R.styleable.DotsIndicator_dotsHeight,3f).toInt()
 
       dotsWidthFactor = a.getFloat(R.styleable.DotsIndicator_dotsWidthFactor, 2.5f)
       if (dotsWidthFactor < 1) {
@@ -76,8 +80,8 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
       dot.layoutDirection = View.LAYOUT_DIRECTION_LTR
     }
 
-    params.height = dotsSize.toInt()
-    params.width = params.height
+    params.height = dotsHeight
+    params.width = dotsWidth
     params.setMargins(dotsSpacing.toInt(), 0, dotsSpacing.toInt(), 0)
     val background = DotsGradientDrawable()
     background.cornerRadius = dotsCornerRadius
@@ -114,13 +118,15 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
       override fun onPageScrolled(selectedPosition: Int, nextPosition: Int, positionOffset: Float) {
         val selectedDot = dots[selectedPosition]
         // Selected dot
-        val selectedDotWidth = (dotsSize + dotsSize * (dotsWidthFactor - 1) * (1 - positionOffset)).toInt()
+       // val selectedDotWidth = (dotsSize + dotsSize * (dotsWidthFactor - 1) * (1 - positionOffset)).toInt()
+        val selectedDotWidth = dotsWidth
         selectedDot.setWidth(selectedDotWidth)
 
         if (dots.isInBounds(nextPosition)) {
           val nextDot = dots[nextPosition]
 
-          val nextDotWidth = (dotsSize + dotsSize * (dotsWidthFactor - 1) * positionOffset).toInt()
+          //val nextDotWidth = (dotsSize + dotsSize * (dotsWidthFactor - 1) * positionOffset).toInt()
+          val nextDotWidth = dotsWidth
           nextDot.setWidth(nextDotWidth)
 
           val selectedDotBackground = selectedDot.background as DotsGradientDrawable
@@ -146,7 +152,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
       }
 
       override fun resetPosition(position: Int) {
-        dots[position].setWidth(dotsSize.toInt())
+        dots[position].setWidth(dotsWidth)
         refreshDotColor(position)
       }
 
