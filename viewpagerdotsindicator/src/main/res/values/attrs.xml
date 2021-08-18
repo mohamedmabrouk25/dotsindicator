@@ -4,6 +4,8 @@
   <attr format="color" name="selectedDotColor"/>
   <attr format="color" name="dotsStrokeColor"/>
   <attr format="dimension" name="dotsSize"/>
+  <attr format="dimension" name="dotsWidth"/>
+  <attr format="dimension" name="dotsHeight"/>
   <attr format="float" name="dotsWidthFactor"/>
   <attr format="dimension" name="dotsSpacing"/>
   <attr format="dimension" name="dotsCornerRadius"/>
@@ -11,6 +13,7 @@
   <attr format="float" name="stiffness"/>
   <attr format="float" name="dampingRatio"/>
   <attr format="boolean" name="progressMode"/>
+  <attr format="boolean" name="isSquare"/>
   <attr format="boolean" name="dotsClickable"/>
 
   <declare-styleable name="DotsIndicator">
@@ -21,6 +24,8 @@
     <attr name="dotsSpacing"/>
     <attr name="dotsCornerRadius"/>
     <attr name="progressMode"/>
+    <attr name="dotsWidth"/>
+    <attr name="dotsHeight"/>
     <attr name="dotsClickable"/>
     <attr name="dotsElevation" format="dimension"/>
   </declare-styleable>
@@ -29,6 +34,8 @@
     <attr name="dotsColor"/>
     <attr name="dotsSize"/>
     <attr name="dotsSpacing"/>
+    <attr name="dotsWidth"/>
+    <attr name="dotsHeight"/>
     <attr name="dotsCornerRadius"/>
     <attr name="dotsStrokeWidth"/>
     <attr name="dotsStrokeColor"/>
@@ -41,6 +48,9 @@
     <attr name="dotsColor"/>
     <attr name="dotsSize"/>
     <attr name="dotsSpacing"/>
+    <attr name="dotsWidth"/>
+    <attr name="dotsHeight"/>
+    <attr name="isSquare"/>
     <attr name="dotsCornerRadius"/>
     <attr name="dotsStrokeWidth"/>
     <attr name="dotsStrokeColor"/>

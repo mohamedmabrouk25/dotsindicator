@@ -26,6 +26,9 @@ class WormDotsIndicator @JvmOverloads constructor(context: Context, attrs: Attri
   private var dotsStrokeWidth: Int = 0
   private var dotIndicatorColor: Int = 0
   private var dotsStrokeColor: Int = 0
+  private var dotsWidth : Int = 0
+  private var dotsHeight : Int = 0
+  private var isSquare = true
 
   private var dotIndicatorXSpring: SpringAnimation? = null
   private var dotIndicatorWidthSpring: SpringAnimation? = null
@@ -41,6 +44,8 @@ class WormDotsIndicator @JvmOverloads constructor(context: Context, attrs: Attri
     strokeDotsLinearLayout.orientation = HORIZONTAL
     addView(strokeDotsLinearLayout)
 
+    dotsHeight = dpToPx(2) //2dp
+    dotsWidth = dpToPx(2) //2dp
     dotsStrokeWidth = dpToPx(2) // 2dp
     dotIndicatorColor = context.getThemePrimaryColor()
     dotsStrokeColor = dotIndicatorColor
@@ -51,6 +56,11 @@ class WormDotsIndicator @JvmOverloads constructor(context: Context, attrs: Attri
       // Dots attributes
       dotIndicatorColor = a.getColor(R.styleable.WormDotsIndicator_dotsColor, dotIndicatorColor)
       dotsStrokeColor = a.getColor(R.styleable.WormDotsIndicator_dotsStrokeColor, dotIndicatorColor)
+
+      dotsWidth = a.getDimension(R.styleable.WormDotsIndicator_dotsWidth,1f).toInt()
+      dotsHeight = a.getDimension(R.styleable.WormDotsIndicator_dotsHeight,1f).toInt()
+
+      isSquare = a.getBoolean(R.styleable.WormDotsIndicator_isSquare,true)
 
       // Spring dots attributes
       dotsStrokeWidth = a.getDimension(R.styleable.WormDotsIndicator_dotsStrokeWidth,
@@ -125,8 +135,14 @@ class WormDotsIndicator @JvmOverloads constructor(context: Context, attrs: Attri
     dotImageView.setBackgroundResource(
             if (stroke) R.drawable.worm_dot_stroke_background else R.drawable.worm_dot_background)
     val params = dotImageView.layoutParams as RelativeLayout.LayoutParams
-    params.height = dotsSize.toInt()
-    params.width = params.height
+
+    if (isSquare){
+      params.height = dotsSize.toInt()
+      params.width = params.height
+    }else {
+      params.height = dotsHeight
+      params.width =dotsWidth
+    }
     params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE)
 
     params.setMargins(dotsSpacing.toInt(), 0, dotsSpacing.toInt(), 0)
